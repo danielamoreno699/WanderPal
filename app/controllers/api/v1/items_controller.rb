@@ -1,19 +1,19 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: %i[ show update destroy ]
 
-  # GET /items
+  # GET /api/v1/items
   def index
     @items = Item.all
 
     render json: @items
   end
 
-  # GET /items/1
+  # GET /api/v1/items/1
   def show
     render json: @item
   end
 
-  # POST /items
+  # POST /api/v1/items
   def create
     @item = Item.new(item_params)
 
@@ -24,7 +24,7 @@ class ItemsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /items/1
+  # PATCH/PUT /api/v1/items/1
   def update
     if @item.update(item_params)
       render json: @item
@@ -33,7 +33,7 @@ class ItemsController < ApplicationController
     end
   end
 
-  # DELETE /items/1
+  # DELETE /api/v1/items/1
   def destroy
     @item.destroy
   end

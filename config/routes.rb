@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
-  resources :reservations
-  resources :items
-  resources :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
+  # /api/v1/greetings
+  namespace :api do
+    namespace :v1 do
+      resources :reservations
+      resources :items
+      resources :users
+    end
+  end
 end
