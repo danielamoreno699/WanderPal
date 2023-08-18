@@ -1,0 +1,4 @@
+class ItemReservation < ApplicationRecord
+  belongs_to :item
+  belongs_to :reservation
+end
