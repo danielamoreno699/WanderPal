@@ -7,7 +7,7 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'http://localhost:3001' # Replace with your React app's URL
+    origins '*' # Replace with your React app's URL
    
     resource '/api/v1/*',
       headers: :any,
