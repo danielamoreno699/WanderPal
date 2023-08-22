@@ -4,7 +4,6 @@ class Api::V1::ReservationsController < ApplicationController
   # GET /api/v1/reservations
   def index
     @reservations = Reservation.all
-
     render json: @reservations
   end
 
@@ -13,23 +12,29 @@ class Api::V1::ReservationsController < ApplicationController
     render json: @reservation
   end
 
-  # POST /api/v1/reservations
-  def create
-    @reservation = Reservation.new(reservation_params)
+# POST /api/v1/reservations
+def create
+  user = User.find_by(id: params[:user_id])
+  item = Item.find_by(id: params[:item_id])
+  reservation = Reservation.new(date: Date.parse(params[:date].to_s), city: params[:city], user: user)
 
-    if @reservation.save
-      render json: @reservation, status: :created, location: @reservation
-    else
-      render json: @reservation.errors, status: :unprocessable_entity
-    end
+  if reservation.save
+    # Associate the reservation with the item using the join table
+    ItemReservation.create(item: item, reservation: reservation)
+    
+    render json: { message: "Reservation created successfully." }
+  else
+    render json: { message: "Failed to create reservation.", errors: reservation.errors.full_messages }
   end
+end
+
 
   # PATCH/PUT /api/v1/reservations/1
   def update
     if @reservation.update(reservation_params)
-      render json: @reservation
+      render json: { message: "Reservation updated successfully." }
     else
-      render json: @reservation.errors, status: :unprocessable_entity
+      render json: { message: "Failed to update reservation." }
     end
   end
 
