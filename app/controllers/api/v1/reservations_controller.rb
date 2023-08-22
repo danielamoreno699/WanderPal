@@ -12,6 +12,17 @@ class Api::V1::ReservationsController < ApplicationController
     render json: @reservation
   end
 
+  def item_details
+    @reservation = Reservation.find(params[:id])
+    puts @reservation.inspect
+  
+    items = @reservation.items
+  
+    item_details = items.map { |item| { name: item.name, image: item.image } }
+  
+    render json: item_details
+  end
+  
 # POST /api/v1/reservations
 def create
   user = User.find_by(id: params[:user_id])

@@ -2,7 +2,11 @@ Rails.application.routes.draw do
   # /api/v1/items/1/reservations
   namespace :api do
     namespace :v1 do
-      resources :reservations, only: [:index, :create, :destroy]
+      resources :reservations, only: [:index, :create, :destroy] do
+      member do
+        get :item_details
+      end
+    end
       resources :users do 
         resources :reservations
       end
