@@ -14,7 +14,7 @@ class Api::V1::ReservationsController < ApplicationController
 
   def item_details
     @reservation = Reservation.includes(items: :item_reservations).find(params[:id])
-  
+
     item_details = @reservation.items.map do |item|
       {
         name: item.name,
@@ -22,41 +22,39 @@ class Api::V1::ReservationsController < ApplicationController
         reservation_ids: item.item_reservations.pluck(:reservation_id)
       }
     end
-  
+
     reservation_ids = item_details.map { |details| details[:reservation_ids] }.flatten.uniq
     reservations = Reservation.where(id: reservation_ids)
-  
+
     item_details.each do |details|
       details[:reservations] = reservations.select { |reservation| details[:reservation_ids].include?(reservation.id) }
     end
-  
+
     render json: item_details
   end
-  
 
-# POST /api/v1/reservations
-def create
-  user = User.find_by(id: params[:user_id])
-  item = Item.find_by(id: params[:item_id])
-  reservation = Reservation.new(date: Date.parse(params[:date].to_s), city: params[:city], user: user)
+  # POST /api/v1/reservations
+  def create
+    user = User.find_by(id: params[:user_id])
+    item = Item.find_by(id: params[:item_id])
+    reservation = Reservation.new(date: Date.parse(params[:date].to_s), city: params[:city], user:)
 
-  if reservation.save
-    # Associate the reservation with the item using the join table
-    ItemReservation.create(item: item, reservation: reservation)
-    
-    render json: { message: "Reservation created successfully." }
-  else
-    render json: { message: "Failed to create reservation.", errors: reservation.errors.full_messages }
+    if reservation.save
+      # Associate the reservation with the item using the join table
+      ItemReservation.create(item:, reservation:)
+
+      render json: { message: 'Reservation created successfully.' }
+    else
+      render json: { message: 'Failed to create reservation.', errors: reservation.errors.full_messages }
+    end
   end
-end
-
 
   # PATCH/PUT /api/v1/reservations/1
   def update
     if @reservation.update(reservation_params)
-      render json: { message: "Reservation updated successfully." }
+      render json: { message: 'Reservation updated successfully.' }
     else
-      render json: { message: "Failed to update reservation." }
+      render json: { message: 'Failed to update reservation.' }
     end
   end
 
