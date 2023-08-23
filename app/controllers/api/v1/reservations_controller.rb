@@ -13,16 +13,27 @@ class Api::V1::ReservationsController < ApplicationController
   end
 
   def item_details
-    @reservation = Reservation.find(params[:id])
-    puts @reservation.inspect
+    @reservation = Reservation.includes(items: :item_reservations).find(params[:id])
   
-    items = @reservation.items
+    item_details = @reservation.items.map do |item|
+      {
+        name: item.name,
+        image: item.image,
+        reservation_ids: item.item_reservations.pluck(:reservation_id)
+      }
+    end
   
-    item_details = items.map { |item| { name: item.name, image: item.image } }
+    reservation_ids = item_details.map { |details| details[:reservation_ids] }.flatten.uniq
+    reservations = Reservation.where(id: reservation_ids)
+  
+    item_details.each do |details|
+      details[:reservations] = reservations.select { |reservation| details[:reservation_ids].include?(reservation.id) }
+    end
   
     render json: item_details
   end
   
+
 # POST /api/v1/reservations
 def create
   user = User.find_by(id: params[:user_id])
