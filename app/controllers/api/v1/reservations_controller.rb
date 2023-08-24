@@ -63,6 +63,7 @@ class Api::V1::ReservationsController < ApplicationController
   # DELETE /api/v1/reservations/1
   def destroy
     @reservation.destroy
+    render json: { message: 'Reservation deleted successfully.' }
   end
 
   private
