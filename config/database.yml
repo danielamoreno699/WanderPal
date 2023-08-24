@@ -8,13 +8,9 @@ default: &default
 development:
   <<: *default
   database: WanderPal_development
-  username: postgres
-  password: Rashida@1987
-
+  
 test:
   <<: *default
-  database: WanderPal_test
-  password: Rashida@1987
 # production:
 #   <<: *default
 #   database: your_app_name_production
