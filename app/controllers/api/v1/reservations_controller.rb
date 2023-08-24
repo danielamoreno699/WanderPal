@@ -43,12 +43,11 @@ class Api::V1::ReservationsController < ApplicationController
       # Associate the reservation with the item using the join table
       ItemReservation.create(item:, reservation:)
 
-    if @reservation.save
-      render json: @reservation, status: :created, location: api_v1_reservation_url(@reservation)
-      render json: { message: 'Reservation created successfully.' }
-
+      render json: { message: 'Reservation created successfully.', reservation: }, status: :created,
+             location: api_v1_reservation_url(reservation)
     else
-      render json: { message: 'Failed to create reservation.', errors: reservation.errors.full_messages }
+      render json: { message: 'Failed to create reservation.', errors: reservation.errors.full_messages },
+             status: :unprocessable_entity
     end
   end
 
