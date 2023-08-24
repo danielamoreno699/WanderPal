@@ -17,6 +17,7 @@ class Api::V1::ReservationsController < ApplicationController
 
     item_details = @reservation.items.map do |item|
       {
+        item_id: item.id
         name: item.name,
         image: item.image,
         reservation_ids: item.item_reservations.pluck(:reservation_id)
@@ -62,21 +63,7 @@ class Api::V1::ReservationsController < ApplicationController
 
   # DELETE /api/v1/reservations/1
   def destroy
-    @reservation = Reservation.find(params[:id])
-  
-    if @reservation
-      begin
-        ActiveRecord::Base.transaction do
-          @reservation.item_reservations.destroy_all
-          @reservation.destroy
-        end
-        render json: { message: 'Reservation and associated data successfully deleted.' }, status: :ok
-      rescue => e
-        render json: { message: 'Failed to delete reservation and associated data.', error: e.message }, status: :unprocessable_entity
-      end
-    else
-      render json: { message: 'Reservation not found.' }, status: :not_found
-    end
+    @reservation.destroy
   end
 
   private
