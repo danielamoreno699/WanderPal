@@ -17,7 +17,7 @@ class Api::V1::ReservationsController < ApplicationController
 
     item_details = @reservation.items.map do |item|
       {
-        item_id: item.id
+        item_id: item.id,
         name: item.name,
         image: item.image,
         reservation_ids: item.item_reservations.pluck(:reservation_id)
