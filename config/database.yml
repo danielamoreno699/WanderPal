@@ -8,10 +8,9 @@ default: &default
 development:
   <<: *default
   database: WanderPal_development
-
+  
 test:
   <<: *default
-  database: WanderPal_test
 # production:
 #   <<: *default
 #   database: your_app_name_production

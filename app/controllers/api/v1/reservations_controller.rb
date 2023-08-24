@@ -43,9 +43,11 @@ class Api::V1::ReservationsController < ApplicationController
       # Associate the reservation with the item using the join table
       ItemReservation.create(item:, reservation:)
 
-      render json: { message: 'Reservation created successfully.' }
+      render json: { message: 'Reservation created successfully.', reservation: }, status: :created,
+             location: api_v1_reservation_url(reservation)
     else
-      render json: { message: 'Failed to create reservation.', errors: reservation.errors.full_messages }
+      render json: { message: 'Failed to create reservation.', errors: reservation.errors.full_messages },
+             status: :unprocessable_entity
     end
   end
 
@@ -72,6 +74,6 @@ class Api::V1::ReservationsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def reservation_params
-    params.require(:reservation).permit(:date, :city)
+    params.require(:reservation).permit(:date, :city, :user_id)
   end
 end

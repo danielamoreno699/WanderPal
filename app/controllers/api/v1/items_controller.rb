@@ -18,7 +18,7 @@ class Api::V1::ItemsController < ApplicationController
     @item = Item.new(item_params)
 
     if @item.save
-      render json: @item, status: :created, location: @item
+      render json: @item, status: :created, location: api_v1_item_url(@item)
     else
       render json: @item.errors, status: :unprocessable_entity
     end
@@ -47,6 +47,6 @@ class Api::V1::ItemsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def item_params
-    params.require(:item).permit(:name, :image, :price, :description)
+    params.require(:item).permit(:name, :image, :price, :description, :user_id)
   end
 end
