@@ -63,8 +63,21 @@ class Api::V1::ReservationsController < ApplicationController
 
   # DELETE /api/v1/reservations/1
   def destroy
-    @reservation.destroy
-    render json: { message: 'Reservation is deleted successfully.' }
+    @reservation = Reservation.find(params[:id])
+
+    if @reservation
+      begin
+        ActiveRecord::Base.transaction do
+          @reservation.item_reservations.destroy_all
+          @reservation.destroy
+        end
+        render json: { message: 'Reservation and associated data successfully deleted.' }, status: :ok
+      rescue => e
+        render json: { message: 'Failed to delete reservation and associated data.', error: e.message }, status: :unprocessable_entity
+      end
+    else
+      render json: { message: 'Reservation not found.' }, status: :not_found
+    end
   end
 
   private
