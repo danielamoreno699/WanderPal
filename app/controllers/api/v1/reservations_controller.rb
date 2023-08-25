@@ -72,8 +72,9 @@ class Api::V1::ReservationsController < ApplicationController
           @reservation.destroy
         end
         render json: { message: 'Reservation and associated data successfully deleted.' }, status: :ok
-      rescue => e
-        render json: { message: 'Failed to delete reservation and associated data.', error: e.message }, status: :unprocessable_entity
+      rescue StandardError => e
+        render json: { message: 'Failed to delete reservation and associated data.', error: e.message },
+               status: :unprocessable_entity
       end
     else
       render json: { message: 'Reservation not found.' }, status: :not_found
