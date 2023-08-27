@@ -1,9 +1,71 @@
 openapi: 3.0.1
 info:
-  title: Your API
+  title: WonderPal API
   version: v1
-
 paths:
+  /api/v1/users:
+    get:
+      summary: List users
+      responses:
+        '200':
+          description: Successful response containing a list of users
+          
+    post:
+      summary: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        '201':
+          description: User created successfully
+          
+  /api/v1/users/{id}:
+    parameters:
+      - name: id
+        in: path
+        description: ID of the user
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Show user details
+      responses:
+        '200':
+          description: Successful response containing user details
+          
+    patch:
+      summary: Update user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        '200':
+          description: Successful response after updating user
+          
+    put:
+      summary: Update user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        '200':
+          description: Successful response after updating user
+          
+    delete:
+      summary: Delete user
+      responses:
+        '200':
+          description: Successful response after deleting user
+
   /api/v1/items:
     get:
       summary: List items
@@ -39,12 +101,24 @@ paths:
           
     patch:
       summary: Update item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemInput'
       responses:
         '200':
           description: Successful response after updating item
           
     put:
       summary: Update item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemInput'
       responses:
         '200':
           description: Successful response after updating item
@@ -87,63 +161,33 @@ paths:
       responses:
         '200':
           description: Successful response containing reservation details
-          
-    delete:
-      summary: Delete reservation
-      responses:
-        '200':
-          description: Successful response after deleting reservation
-
-  /api/v1/users:
-    get:
-      summary: List users
-      responses:
-        '200':
-          description: Successful response containing a list of users
-          
-    post:
-      summary: Create a new user
+    put:
+      summary: Update Reservation
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserInput'
-      responses:
-        '201':
-          description: User created successfully
-          
-  /api/v1/users/{id}:
-    parameters:
-      - name: id
-        in: path
-        description: ID of the user
-        required: true
-        schema:
-          type: string
-    get:
-      summary: Show user details
+              $ref: '#/components/schemas/ReservationInput'
       responses:
         '200':
-          description: Successful response containing user details
-          
+          description: Successful response after updating item
     patch:
-      summary: Update user
+      summary: Update Reservation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReservationInput'
       responses:
         '200':
-          description: Successful response after updating user
-          
-    put:
-      summary: Update user
-      responses:
-        '200':
-          description: Successful response after updating user
-          
+          description: Successful response after updating item
     delete:
-      summary: Delete user
+      summary: Delete reservation
       responses:
         '200':
-          description: Successful response after deleting user
+          description: Successful response after deleting reservation
 
 components:
   schemas:
@@ -223,4 +267,4 @@ servers:
   - url: http://{defaultHost}
     variables:
       defaultHost:
-        default: localhost:3000
+        default: 127.0.0.1:3000
