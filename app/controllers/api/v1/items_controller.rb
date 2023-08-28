@@ -36,6 +36,7 @@ class Api::V1::ItemsController < ApplicationController
   # DELETE /api/v1/items/1
   def destroy
     @item.destroy
+    render json: { message: 'Item deleted successfully.' }
   end
 
   private
