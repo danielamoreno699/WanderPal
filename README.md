@@ -25,7 +25,7 @@ If you would like to clone and view it on your side then try `http://localhost:3
 
 ### Initial State
 
-![image](https://ibb.co/vjh00GB)
+![image](./app/assets/initial%20state.png)
 
 <br>
 <br>
