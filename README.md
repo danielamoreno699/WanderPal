@@ -59,7 +59,7 @@ If you would like to clone and view it on your side then try `http://localhost:3
   ```
   rails s -p 3001
   ```
-  Open the browser with `localhost:3000`
+  Open the browser with `localhost:3001`
 
   
 ## After installing bundle
