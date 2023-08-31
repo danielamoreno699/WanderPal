@@ -1,14 +1,12 @@
 class Api::V1::ReservationsController < ApplicationController
   before_action :set_reservation, only: %i[show update destroy]
 
-  # GET /api/v1/reservations
   def index
     @user = User.find_by(id: params[:user_id])
     @reservations = Reservation.where(user: @user)
     render json: @reservations
   end
 
-  # GET /api/v1/reservations/1
   def show
     render json: @reservation
   end
@@ -35,7 +33,6 @@ class Api::V1::ReservationsController < ApplicationController
     render json: item_details
   end
 
-  # POST /api/v1/reservations
   def create
     user = User.find_by(id: params[:user_id])
     item = Item.find_by(id: params[:item_id])
@@ -53,7 +50,6 @@ class Api::V1::ReservationsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /api/v1/reservations/1
   def update
     if @reservation.update(reservation_params)
       render json: { message: 'Reservation updated successfully.' }
@@ -62,7 +58,6 @@ class Api::V1::ReservationsController < ApplicationController
     end
   end
 
-  # DELETE /api/v1/reservations/1
   def destroy
     @reservation = Reservation.find(params[:id])
 
@@ -84,12 +79,10 @@ class Api::V1::ReservationsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_reservation
     @reservation = Reservation.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def reservation_params
     params.require(:reservation).permit(:date, :city, :user_id)
   end

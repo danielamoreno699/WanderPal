@@ -36,9 +36,9 @@ class Api::V1::UsersController < ApplicationController
   # DELETE /api/v1/users/1
   def destroy
     if @user.destroy
-      render json: { message: 'Item deleted successfully.' }
+      render json: { message: 'User deleted successfully.' }
     else
-      render json: { message: 'Failed to delete item.' }, status: :unprocessable_entity
+      render json: { message: 'Failed to delete User.' }, status: :unprocessable_entity
     end
   end
 
