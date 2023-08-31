@@ -13,8 +13,6 @@ test:
   <<: *default
   database: WanderPal_test
 # production:
-#   <<: *default
-#   database: your_app_name_production
-#   username: your_production_username
-#   password: your_production_password
-#   host: your_production_database_host
+production:
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %>
