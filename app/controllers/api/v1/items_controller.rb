@@ -35,12 +35,10 @@ class Api::V1::ItemsController < ApplicationController
 
   # DELETE /api/v1/items/1
   def destroy
-    def destroy
-      if @item.destroy
-        render json: { message: 'Item deleted successfully.' }
-      else
-        render json: { message: 'Failed to delete item.' }, status: :unprocessable_entity
-      end
+    if @item.destroy
+      render json: { message: 'Item deleted successfully.' }
+    else
+      render json: { message: 'Failed to delete item.' }, status: :unprocessable_entity
     end
   end
 
