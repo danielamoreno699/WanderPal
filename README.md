@@ -4,7 +4,7 @@
 ## API Manipulation and Endpoints
 
 If you need further information about the endpoints you can view the documentation navigating to /api-docs.
-If you would like to clone and view it on your side then try `http://localhost:3000/api-docs`.
+If you would like to clone and view it on your side then try `http://localhost:3001/api-docs`.
 
 ## Built With
 
@@ -57,9 +57,9 @@ If you would like to clone and view it on your side then try `http://localhost:3
   To start the server run: 
 
   ```
-  rails s
+  rails s -p 3001
   ```
-  Open the browser with `localhost:3000`
+  Open the browser with `localhost:3001`
 
   
 ## After installing bundle

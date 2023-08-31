@@ -9,7 +9,7 @@ paths:
       responses:
         '200':
           description: Successful response containing a list of users
-          
+
     post:
       summary: Create a new user
       requestBody:
@@ -21,7 +21,7 @@ paths:
       responses:
         '201':
           description: User created successfully
-          
+
   /api/v1/users/{id}:
     parameters:
       - name: id
@@ -35,7 +35,7 @@ paths:
       responses:
         '200':
           description: Successful response containing user details
-          
+
     patch:
       summary: Update user
       requestBody:
@@ -47,7 +47,7 @@ paths:
       responses:
         '200':
           description: Successful response after updating user
-          
+
     put:
       summary: Update user
       requestBody:
@@ -59,12 +59,26 @@ paths:
       responses:
         '200':
           description: Successful response after updating user
-          
+
     delete:
       summary: Delete user
       responses:
         '200':
           description: Successful response after deleting user
+
+  /api/v1/users/{id}/reservations:
+    parameters:
+      - name: id
+        in: path
+        description: ID of the user
+        required: true
+        schema:
+          type: string
+    get:
+      summary: User reservations list
+      responses:
+        '200':
+          description: Successful response containing a list of reservations for user
 
   /api/v1/items:
     get:
@@ -72,7 +86,7 @@ paths:
       responses:
         '200':
           description: Successful response containing a list of items
-          
+
     post:
       summary: Create a new item
       requestBody:
@@ -84,7 +98,7 @@ paths:
       responses:
         '201':
           description: Item created successfully
-          
+
   /api/v1/items/{id}:
     parameters:
       - name: id
@@ -98,7 +112,7 @@ paths:
       responses:
         '200':
           description: Successful response containing item details
-          
+
     patch:
       summary: Update item
       requestBody:
@@ -110,7 +124,7 @@ paths:
       responses:
         '200':
           description: Successful response after updating item
-          
+
     put:
       summary: Update item
       requestBody:
@@ -122,7 +136,7 @@ paths:
       responses:
         '200':
           description: Successful response after updating item
-          
+
     delete:
       summary: Delete item
       responses:
@@ -135,7 +149,7 @@ paths:
       responses:
         '200':
           description: Successful response containing a list of reservations
-          
+
     post:
       summary: Create a new reservation
       requestBody:
@@ -147,7 +161,7 @@ paths:
       responses:
         '201':
           description: Reservation created successfully
-          
+
   /api/v1/reservations/{id}:
     parameters:
       - name: id
@@ -161,17 +175,7 @@ paths:
       responses:
         '200':
           description: Successful response containing reservation details
-    put:
-      summary: Update Reservation
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ReservationInput'
-      responses:
-        '200':
-          description: Successful response after updating item
+
     patch:
       summary: Update Reservation
       requestBody:
@@ -182,7 +186,20 @@ paths:
               $ref: '#/components/schemas/ReservationInput'
       responses:
         '200':
-          description: Successful response after updating item
+          description: Successful response after updating reservation
+
+    put:
+      summary: Update Reservation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReservationInput'
+      responses:
+        '200':
+          description: Successful response after updating reservation
+
     delete:
       summary: Delete reservation
       responses:
@@ -204,7 +221,7 @@ components:
           type: string
         user_id:
           type: integer
-          
+
     ReservationInput:
       type: object
       properties:
@@ -215,7 +232,7 @@ components:
           type: string
         user_id:
           type: integer
-          
+
     UserInput:
       type: object
       properties:
@@ -223,7 +240,7 @@ components:
           type: string
         role:
           type: string
-          
+
     Item:
       type: object
       properties:
@@ -239,7 +256,7 @@ components:
           type: string
         user_id:
           type: integer
-          
+
     Reservation:
       type: object
       properties:
@@ -252,7 +269,7 @@ components:
           type: string
         user_id:
           type: integer
-          
+
     User:
       type: object
       properties:
