@@ -8,7 +8,7 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
     end
 
     it 'returns a list of items' do
-      create_list(:item, 3) # Assuming you have a factory for Item
+      create_list(:item, 3)
       get :index
       items = JSON.parse(response.body)
       expect(items.length).to eq(3)
@@ -17,7 +17,7 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
 
   describe 'GET #show' do
     it 'returns a successful response' do
-      item = create(:item) # Assuming you have a factory for Item
+      item = create(:item)
       get :show, params: { id: item.id }
       expect(response).to have_http_status(:success)
     end
@@ -25,10 +25,10 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
 
   describe 'POST #create' do
     context 'with valid parameters' do
-      let!(:user) { create(:user) } # Create a user before running the test
+      let!(:user) { create(:user) }
 
       it 'creates a new item' do
-        item_params = attributes_for(:item, user_id: user.id) # Include the user's ID
+        item_params = attributes_for(:item, user_id: user.id)
         expect { post :create, params: { item: item_params } }.to change(Item, :count).by(1)
       end
     end

@@ -8,7 +8,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     end
 
     it 'returns a list of users' do
-      create_list(:user, 3) # Assuming you have a factory for User
+      create_list(:user, 3)
       get :index
       users = JSON.parse(response.body)
       expect(users.length).to eq(3)
@@ -17,7 +17,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
   describe 'GET #show' do
     it 'returns a successful response' do
-      user = create(:user) # Assuming you have a factory for User
+      user = create(:user)
       get :show, params: { id: user.id }
       expect(response).to have_http_status(:success)
     end
