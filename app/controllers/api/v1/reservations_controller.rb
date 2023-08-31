@@ -36,11 +36,11 @@ class Api::V1::ReservationsController < ApplicationController
   def create
     user = User.find_by(id: params[:user_id])
     item = Item.find_by(id: params[:item_id])
-    reservation = Reservation.new(date: Date.parse(params[:date].to_s), city: params[:city], user:)
+    reservation = Reservation.new(date: params[:date], city: params[:city], user: user)
 
     if reservation.save
       # Associate the reservation with the item using the join table
-      ItemReservation.create(item:, reservation:)
+      ItemReservation.create(item: item, reservation: reservation)
 
       render json: { message: 'Reservation created successfully.', reservation: }, status: :created,
              location: api_v1_reservation_url(reservation)
@@ -54,9 +54,11 @@ class Api::V1::ReservationsController < ApplicationController
     if @reservation.update(reservation_params)
       render json: { message: 'Reservation updated successfully.' }
     else
-      render json: { message: 'Failed to update reservation.' }
+      render json: { message: 'Failed to update reservation.', errors: @reservation.errors.full_messages },
+             status: :unprocessable_entity
     end
   end
+  
 
   def destroy
     @reservation = Reservation.find(params[:id])
